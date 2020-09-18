@@ -1,0 +1,21 @@
+class CoinChangeProblem {
+    public int coinChange(int[] coins, int amount) {
+        int[] mem = new int[amount + 1];
+        
+        for(int sum = 1; sum <= amount; sum++) {
+            int min = Integer.MAX_VALUE;
+            
+            for(int j = 0; j < coins.length; j++) {
+                if(sum - coins[j] == 0) {
+                    min = 0;
+                } else if (sum - coins[j] > 0) {
+                    min = Math.min(min, mem[sum - coins[j]]);
+                }
+            }
+            
+            mem[sum] = (min == Integer.MAX_VALUE) ? Integer.MAX_VALUE : (1 + min);
+        }
+        
+        return mem[amount] == Integer.MAX_VALUE ? -1 : mem[amount];
+    }
+}
